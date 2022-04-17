@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="Practice2Buha.Views.PersonControlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Practice2Buha.Views" 
+             xmlns:viewmodels="clr-namespace:Practice2Buha.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:PersonViewModel}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             IsEnabled="{Binding IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+    <Grid HorizontalAlignment="Center" Width="780" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "*" />
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*" />
+            <RowDefinition Height = "*" />
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*"/>
+            <RowDefinition Height = "*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="170" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock FontSize="20" Grid.Row="0" Margin="5" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"
+         Text="User Information" />
+        <TextBlock FontSize="20" Grid.Row="1" Margin="5" Grid.Column="0" 
+         Text="Name: "/>
+        <TextBlock FontSize="20" Grid.Row="2" Margin="5" Grid.Column="0" 
+         Text="Surname: "/>
+        <TextBlock FontSize="20" Grid.Row="3" Margin="5" Grid.Column="0"
+         Text="Email: "/>
+        <TextBlock FontSize="20" Grid.Row="4" Margin="5" Grid.Column="0"
+         Text="Date of Birth: "/>
+
+        <TextBox  Grid.Row="1" Margin="5" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30"
+                  Text="{Binding Name, Mode=OneWayToSource}"/>
+        <TextBox  Grid.Row="2" Margin="5" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30"
+                  Text="{Binding Surname, Mode=OneWayToSource}"/>
+        <TextBox  Grid.Row="3" Margin="5" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30"
+                  Text="{Binding Email, Mode=OneWayToSource}"/>
+        <DatePicker IsDropDownOpen="True" SelectedDateFormat="Short"  Grid.Row="4" Grid.Column="1" 
+                  SelectedDate="{Binding Birthday, Mode=TwoWay}"/>
+        <Button  Grid.Row="7" Margin="5" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" Height="90" Content="Proceed" Command="{Binding SelectDateCommand}"/>
+
+        <TextBlock FontSize="20" Grid.Row="1" Margin="5" Grid.Column="3"
+         Text="Name: "/>
+        <TextBlock FontSize="20" Grid.Row="2" Margin="5" Grid.Column="3"
+         Text="Surname: "/>
+        <TextBlock FontSize="20" Grid.Row="3" Margin="5" Grid.Column="3"
+         Text="Email: "/>
+        <TextBlock FontSize="20" Grid.Row="4" Margin="5" Grid.Column="3" 
+         Text="Birthday: "/>
+        <TextBlock FontSize="20" Grid.Row="5" Margin="5" Grid.Column="3"
+         Text="Is an adult? "/>
+        <TextBlock FontSize="20" Grid.Row="6" Margin="5" Grid.Column="3"
+         Text="Western zodiac: "/>
+        <TextBlock FontSize="20" Grid.Row="7" Margin="5" Grid.Column="3"
+         Text="Chinese zodiac: "/>
+        <TextBlock FontSize="20" Grid.Row="8" Margin="5" Grid.Column="3"
+         Text="Is today birthday? "/>
+
+        <TextBlock FontSize="20" Grid.Row="1" Margin="5" Grid.Column="4"
+          Text="{Binding Name, Mode=TwoWay}"/>
+        <TextBlock FontSize="20" Grid.Row="2" Margin="5" Grid.Column="4"
+         Text="{Binding Surname, Mode=TwoWay}"/>
+        <TextBlock FontSize="20" Grid.Row="3" Margin="5" Grid.Column="4"
+         Text="{Binding Email, Mode=TwoWay}"/>
+        <TextBlock FontSize="20" Grid.Row="4" Margin="5" Grid.Column="4"
+         Text="{Binding DayOfBirthToString, Mode=OneWay}"/>
+        <TextBlock FontSize="20" Grid.Row="5" Margin="5" Grid.Column="4"
+          Text="{Binding IsAdult, Mode=OneWay}"/>
+        <TextBlock FontSize="20" Grid.Row="6" Margin="5" Grid.Column="4"
+          Text="{Binding SunSign, Mode=OneWay}"/>
+        <TextBlock FontSize="20" Grid.Row="7" Margin="5" Grid.Column="4"
+          Text="{Binding ChineseSign, Mode=OneWay}"/>
+        <TextBlock FontSize="20" Grid.Row="8" Margin="5" Grid.Column="4"
+          Text="{Binding IsBirthday, Mode=OneWay}"/>
+
+    </Grid>
+</UserControl>
