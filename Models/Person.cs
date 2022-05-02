@@ -37,6 +37,7 @@ namespace Practice2Buha.Models
                 return surname; 
             }
             set {
+
                 surname = value; 
             }
         }
