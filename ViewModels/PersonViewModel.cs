@@ -1,5 +1,7 @@
 ﻿using Practice2Buha.Models;
 using Practice2Buha.Tools;
+using Practice2Buha.Exceptions;
+using System.Text.RegularExpressions;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -44,7 +46,16 @@ namespace Practice2Buha.ViewModels
                 if (DateIsCorrect()) { return person.Email; }
                 return " ";
             }
-            set { person.Email = value; }
+            set {
+                try
+                {
+                    person.Email = value;
+                }
+                catch (EmailException ex)
+                {
+                    MessageBox.Show(ex.Message + $"\nInvalid value: {ex.Value}");
+                }
+            }
         }
 
         public DateTime Birthday
@@ -56,10 +67,19 @@ namespace Practice2Buha.ViewModels
             {
                 if (person.Birthday != value)
                 {
-                    person.Birthday = value;
-                    IsEnabled = false;
-                    Task.Run(async () => await setAsyncData());
-                    IsEnabled = true;
+                    try
+                    {
+                        person.Birthday = value;
+                        Task.Run(async () => await setAsyncData());
+                    }
+                    catch (DateException ex)
+                    {
+                        MessageBox.Show(ex.Message + $"\nInvalid value: {ex.Value.ToString("d")}");
+                    }
+                    NotifyPropertyChanged("IsAdult");
+                    NotifyPropertyChanged("SunSign");
+                    NotifyPropertyChanged("ChineseSign");
+                    NotifyPropertyChanged("IsBirthday");
                 }
             }
         }
@@ -140,6 +160,11 @@ namespace Practice2Buha.ViewModels
             if (person.Age() < 0 || person.Age() > 135) return false;
             return true;
         }
+        public bool CorrectEmail(string email)
+        {
+            Regex r = new Regex(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+            return r.Match(email).Success;
+        }
         private async Task setAsyncData()
         {
             await Task.Run(() => DateIsCorrect());
@@ -159,17 +184,17 @@ namespace Practice2Buha.ViewModels
 
         private void Proceed()
         {
-            NotifyPropertyChanged("Name");
-            NotifyPropertyChanged("Surname");
-            NotifyPropertyChanged("Email");
-            NotifyPropertyChanged("DayOfBirthToString");
-            NotifyPropertyChanged("IsAdult");
-            NotifyPropertyChanged("SunSign");
-            NotifyPropertyChanged("ChineseSign");
-            NotifyPropertyChanged("IsBirthday");
+            
             if (!DateIsCorrect())
             {
-                MessageBox.Show("Wrong! You must be older than 0 or younger than 135");
+                try
+                {
+                    throw new DateException("Wrong! You must be older than 0 or younger than 135!", Birthday);
+                }
+                catch (DateException ex)
+                {
+                    MessageBox.Show(ex.Message + $"\nInvalid value: {ex.Value.ToString("d")}");
+                }
             }
             else
             {
@@ -177,8 +202,16 @@ namespace Practice2Buha.ViewModels
                 {
                     MessageBox.Show("Happy birthday!");
                 }
-
+                NotifyPropertyChanged("Name");
+                NotifyPropertyChanged("Surname");
+                NotifyPropertyChanged("Email");
+                NotifyPropertyChanged("DayOfBirthToString");
+                NotifyPropertyChanged("IsAdult");
+                NotifyPropertyChanged("SunSign");
+                NotifyPropertyChanged("ChineseSign");
+                NotifyPropertyChanged("IsBirthday");
             }
+
         }
 
 

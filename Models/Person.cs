@@ -1,4 +1,7 @@
 ﻿using System;
+using Practice2Buha.Exceptions;
+using System.Text.RegularExpressions;
+using Practice2Buha.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +47,15 @@ namespace Practice2Buha.Models
                 return email; 
             }
             set {
-                email = value; 
+                if (!CorrectEmail(value) && !value.Equals(""))
+                {
+                    email = "";
+                    throw new EmailException("Email is wrong.", value);
+                }
+                else
+                {
+                    email = value;
+                }
             }
         }
 
@@ -60,6 +71,10 @@ namespace Practice2Buha.Models
                 if (birthday != value)
                 {
                     birthday = value;
+                    if (!DateIsCorrect())
+                    {
+                        throw new DateException("Invalid birthday. It must be between 0 and 135: ", value);
+                    }
                 }
             }
         }
@@ -101,6 +116,18 @@ namespace Practice2Buha.Models
                 return DateTime.Today.Year - Birthday.Year - 1;
             }
             return DateTime.Today.Year - Birthday.Year;
+        }
+        public bool DateIsCorrect()
+        {
+            if (Birthday > DateTime.Today) return false;
+            if (Age() < 0 || Age() > 135) return false;
+            return true;
+        }
+
+        public bool CorrectEmail(string email)
+        {
+            Regex r = new Regex(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+            return r.Match(email).Success;
         }
 
         #region Read-only properties
