@@ -1,6 +1,7 @@
 ﻿using Practice2Buha.Models;
 using Practice2Buha.Tools;
 using Practice2Buha.Exceptions;
+using Practice2Buha.Services;
 using System.Text.RegularExpressions;
 using System;
 using System.ComponentModel;
@@ -14,11 +15,24 @@ namespace Practice2Buha.ViewModels
         #region Fields
         private Person person = new Person(null, null, null);
         private RelayCommand<object> proceed;
+        private Action goToPeople;
         private bool isEnabled = true;
         #endregion
 
 
         #region Properties
+
+        public PersonViewModel(Action gotoAllPeople)
+        {
+            goToPeople = gotoAllPeople;
+            Guid = Guid.NewGuid();
+        }
+
+        public PersonViewModel()
+        {
+            Guid = Guid.NewGuid();
+        }
+
         public string Name
         {
             get
@@ -28,6 +42,8 @@ namespace Practice2Buha.ViewModels
             }
             set { person.Name = value; }
         }
+
+        public Guid Guid { get; set; }
 
         public string Surname
         {
@@ -182,7 +198,7 @@ namespace Practice2Buha.ViewModels
             }
         }
 
-        private void Proceed()
+        private async void Proceed()
         {
             
             if (!DateIsCorrect())
@@ -210,8 +226,28 @@ namespace Practice2Buha.ViewModels
                 NotifyPropertyChanged("SunSign");
                 NotifyPropertyChanged("ChineseSign");
                 NotifyPropertyChanged("IsBirthday");
+
+                var peopleService = new AllPeopleService();
+                bool newPerson = await peopleService.AddNewPersonAsync(this);
+                if (!newPerson)
+                {
+                    MessageBox.Show("Person with this email already exists.");
+                }
+                goToPeople.Invoke();
             }
 
+        }
+
+        public int Age()
+        {
+            if (DateTime.Today.Year == Birthday.Year && (DateTime.Today.Month < Birthday.Month ||
+                (DateTime.Today.Month == Birthday.Month && DateTime.Today.Day < Birthday.Day)))
+                return -1;
+            if (DateTime.Today.Month < Birthday.Month || (DateTime.Today.Month == Birthday.Month && DateTime.Today.Day < Birthday.Day))
+            {
+                return DateTime.Today.Year - Birthday.Year - 1;
+            }
+            return DateTime.Today.Year - Birthday.Year;
         }
 
 

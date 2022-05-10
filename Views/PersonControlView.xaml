@@ -18,15 +18,9 @@
             <RowDefinition Height = "*"/>
             <RowDefinition Height = "*"/>
             <RowDefinition Height = "*"/>
-            <RowDefinition Height = "*"/>
-            <RowDefinition Height = "*"/>
-            <RowDefinition Height = "*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="100" />
-            <ColumnDefinition Width="170" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -51,39 +45,6 @@
                   SelectedDate="{Binding Birthday, Mode=TwoWay}"/>
         <Button  Grid.Row="7" Margin="5" Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" Height="90" Content="Proceed" Command="{Binding SelectDateCommand}"/>
 
-        <TextBlock FontSize="20" Grid.Row="1" Margin="5" Grid.Column="3"
-         Text="Name: "/>
-        <TextBlock FontSize="20" Grid.Row="2" Margin="5" Grid.Column="3"
-         Text="Surname: "/>
-        <TextBlock FontSize="20" Grid.Row="3" Margin="5" Grid.Column="3"
-         Text="Email: "/>
-        <TextBlock FontSize="20" Grid.Row="4" Margin="5" Grid.Column="3" 
-         Text="Birthday: "/>
-        <TextBlock FontSize="20" Grid.Row="5" Margin="5" Grid.Column="3"
-         Text="Is an adult? "/>
-        <TextBlock FontSize="20" Grid.Row="6" Margin="5" Grid.Column="3"
-         Text="Western zodiac: "/>
-        <TextBlock FontSize="20" Grid.Row="7" Margin="5" Grid.Column="3"
-         Text="Chinese zodiac: "/>
-        <TextBlock FontSize="20" Grid.Row="8" Margin="5" Grid.Column="3"
-         Text="Is today birthday? "/>
-
-        <TextBlock FontSize="20" Grid.Row="1" Margin="5" Grid.Column="4"
-          Text="{Binding Name, Mode=TwoWay}"/>
-        <TextBlock FontSize="20" Grid.Row="2" Margin="5" Grid.Column="4"
-         Text="{Binding Surname, Mode=TwoWay}"/>
-        <TextBlock FontSize="20" Grid.Row="3" Margin="5" Grid.Column="4"
-         Text="{Binding Email, Mode=TwoWay}"/>
-        <TextBlock FontSize="20" Grid.Row="4" Margin="5" Grid.Column="4"
-         Text="{Binding DayOfBirthToString, Mode=OneWay}"/>
-        <TextBlock FontSize="20" Grid.Row="5" Margin="5" Grid.Column="4"
-          Text="{Binding IsAdult, Mode=OneWay}"/>
-        <TextBlock FontSize="20" Grid.Row="6" Margin="5" Grid.Column="4"
-          Text="{Binding SunSign, Mode=OneWay}"/>
-        <TextBlock FontSize="20" Grid.Row="7" Margin="5" Grid.Column="4"
-          Text="{Binding ChineseSign, Mode=OneWay}"/>
-        <TextBlock FontSize="20" Grid.Row="8" Margin="5" Grid.Column="4"
-          Text="{Binding IsBirthday, Mode=OneWay}"/>
 
     </Grid>
 </UserControl>

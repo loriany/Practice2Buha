@@ -2,13 +2,10 @@
 using Practice2Buha.Exceptions;
 using System.Text.RegularExpressions;
 using Practice2Buha.ViewModels;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Practice2Buha.Models
 {
+    [Serializable]
     class Person
     {
 
@@ -17,10 +14,12 @@ namespace Practice2Buha.Models
         private string surname;
         private string email;
         private DateTime birthday;
+        private Guid guid;
 
         #endregion
 
         #region Properties
+       
         public string Name
         {
             get {
@@ -31,6 +30,7 @@ namespace Practice2Buha.Models
             }
         }
 
+        public Guid Guid { get; set; }
         public string Surname
         {
             get {
@@ -82,12 +82,13 @@ namespace Practice2Buha.Models
         #endregion
 
         #region Constructors
-        public Person(string firstName, string lastName, string emailValue, DateTime dateOfBirth)
+        public Person(string firstName, string lastName, string emailValue, DateTime dateOfBirth, Guid g)
         {
             name = firstName;
             surname = lastName;
             email = emailValue;
             birthday = dateOfBirth;
+            guid = g;
         }
 
         public Person(string firstName, string lastName, string emailValue)
@@ -104,7 +105,9 @@ namespace Practice2Buha.Models
             surname = lastName;
             email = null;
             birthday = dateOfBirth;
+            guid = new Guid();
         }
+
         #endregion
 
         public int Age()

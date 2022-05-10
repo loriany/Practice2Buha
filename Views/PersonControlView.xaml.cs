@@ -19,7 +19,12 @@ namespace Practice2Buha.Views
         public PersonControlView()
         {
             InitializeComponent();
-            DataContext = personViewModel = new PersonViewModel();
+            DataContext = personViewModel = new PersonViewModel(GoToAllPeople);
+        }
+
+        public void GoToAllPeople()
+        {
+            Content = new PeopleControlView();
         }
     }
 }
